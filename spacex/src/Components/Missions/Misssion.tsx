@@ -4,6 +4,7 @@ import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import Link from '@material-ui/core/Link';
 interface Props{
     data: MissionQuery
 }
@@ -34,8 +35,8 @@ const Missions:React.FC<Props> = ({data}) =>{
         <Grid item xs={12} className={classes.root}>
             
                 
-                <Box display="flex" flexDirection="row" p={10} m={10} bgcolor="background.paper" key={i}>
-                <Box p={2} m={2} bgcolor="grey.300">
+                <Box display="flex" p={10} m={10} bgcolor="background.paper" key={i} alignItems="center" justifyContent="center" >
+                <Box bgcolor="grey.300">
                 <Typography  color="textSecondary" gutterBottom>
 
                 {Mission.mission_name}
@@ -43,13 +44,39 @@ const Missions:React.FC<Props> = ({data}) =>{
                 
                      
                 </Box>
-                <Box p={2} m={2} bgcolor="grey.300">
+                <Box p={15}  bgcolor="grey.300" width="100%" height="100%">
                 <Typography variant="body2" color="textSecondary" component="p">
 
                 {Mission.description}
                     </Typography>
                 </Box>
-                    
+                <Box p={2} m={2} bgcolor="grey.300">
+                <Typography variant="body2" color="textSecondary" component="p">
+                    {Mission.website && (
+                        <Link
+                        href={Mission.website}
+                        color="secondary"
+                        target="_blank"
+                        >
+                            Website
+                        </Link>
+                    )}
+                
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary" component="p">
+
+                    {Mission.wikipedia && (
+                        <Link
+                        href={Mission.wikipedia}
+                        color="secondary"
+                        target="_blank"
+                        >
+                            Wikipedia
+                        </Link>
+                    )}
+                                        </Typography>
+
+                </Box>  
                 
                           
                 </Box>

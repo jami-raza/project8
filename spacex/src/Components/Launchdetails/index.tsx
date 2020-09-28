@@ -1,9 +1,10 @@
 import React from 'react';
 import {useLaunchInfoQuery} from '../../generated/graphql';
 import Launchdetails from './launchdetail';
-
+import {useParams} from 'react-router-dom';
 const LaunchDetailContainer = () => {
-    const {data, loading, error} = useLaunchInfoQuery({variables:{id:"13"}});
+    const {id} = useParams();
+    const {data, loading, error} = useLaunchInfoQuery({variables:{id:id}});
 
     if (loading){
         return <div>Loading</div>
@@ -14,6 +15,8 @@ const LaunchDetailContainer = () => {
     if (!data){
         return<div>Please select a mission</div>
     }
+    
+    
     return <Launchdetails data={data}/>
 }
 export default LaunchDetailContainer;

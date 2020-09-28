@@ -14,13 +14,13 @@ function Xrouter(){
         <Router>
             <Header/>
             <Routes>
-                <Route path="/" element={<Home/>}/>
-                <Route path="About-us" element={<CompanyInfo/>}/>
-                <Route path="Launches" element={<Launches/>}/>
-                <Route path="Launches:id" element={<LaunchDetails/>}/>
-                <Route path="Missions" element={<Missions/>}/>
-                <Route path="Rockets" element={<Rockets/>}/>
-                <Route path="Ships" element={<Ships/>}/>
+                <Route path='/' element={<Home/>}/>
+                <Route path='about-us' element={<CompanyInfo/>}/>
+                <Route path='launches' element={<Launches/>}/>
+                <Route path='launches/:id' element={<LaunchDetails/>}/>
+                <Route path='missions' element={<Missions/>}/>
+                <Route path='rockets' element={<Rockets/>}/>
+                <Route path='ships' element={<Ships/>}/>
 
                 
             </Routes>

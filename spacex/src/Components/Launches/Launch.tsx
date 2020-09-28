@@ -1,11 +1,12 @@
 import React from 'react';
 import {LaunchesQuery} from '../../generated/graphql';
-import {Card,CardContent,CardActionArea,
-CardActions,CardMedia,Typography,Grid,Button,} from '@material-ui/core';
+import {Grid, Button,Card, Box, Typography,Paper} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import {Link} from 'react-router-dom';
 
 interface Props {
-    data: LaunchesQuery
+    data: LaunchesQuery,
+    
 }
 const useStyles = makeStyles({
     root: {
@@ -23,40 +24,30 @@ const useStyles = makeStyles({
             
 const Launch: React.FC<Props> = ({data}) =>{
     const classes = useStyles();
+    
     return(
-        <Grid item xs={12} >
-            <h3>Launches</h3>
-            {!!data.launches && data.launches.map(
-                    (launch, i) => !!launch && (
-        <Grid item xs={12} sm={6} key={i}>
-            <Card className={classes.root} >
-            <CardActionArea>
-                <CardMedia
-                className={classes.media} />
-            <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
+        <Grid container spacing={3}>
+          {!!data.launches && data.launches.map(
+            (launch, i) => 
+        
+          <Grid item xs={12} sm={6} md={3} key={i}>
+            <Box p={2} m={1}>
+              <Box p={1} m={1}>
+              <Typography variant="h2">
               {launch?.launch_site?.site_name}
-          </Typography>
-          <Typography className={classes.pos} color="textSecondary">
-          Year - 
-        </Typography>
-            </CardContent>
-            </CardActionArea>
-            <CardActions>
-        <Button size="small" color="primary">
-          <a href={`$launch?.links?.article_link`}>article</a>
-        </Button>
-        <Button size="small" color="primary">
-          Learn More
-        </Button>
-      </CardActions>
-            </Card>
-            
-            </Grid> 
-            )
-            )} 
-        </Grid>
+              </Typography>
+              </Box>
+            </Box>
+          </Grid>
+          )}
+          
+          </Grid>
+    
+    
+    
     )
-}
-
+  }
+            
+          
+           
 export default Launch;
