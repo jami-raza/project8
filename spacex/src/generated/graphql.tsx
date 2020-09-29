@@ -778,7 +778,7 @@ export type LaunchesQuery = (
   { __typename?: 'Query' }
   & { launches?: Maybe<Array<Maybe<(
     { __typename?: 'Launch' }
-    & Pick<Launch, 'flight_number' | 'mission_id' | 'launch_year'>
+    & Pick<Launch, 'flight_number' | 'mission_id' | 'mission_name' | 'launch_year'>
     & { launch_site?: Maybe<(
       { __typename?: 'LaunchSite' }
       & Pick<LaunchSite, 'site_name'>
@@ -927,9 +927,10 @@ export type LaunchInfoLazyQueryHookResult = ReturnType<typeof useLaunchInfoLazyQ
 export type LaunchInfoQueryResult = Apollo.QueryResult<LaunchInfoQuery, LaunchInfoQueryVariables>;
 export const LaunchesDocument = gql`
     query launches {
-  launches {
+  launches(sort: "flickr_images", offset: 10) {
     flight_number
     mission_id
+    mission_name
     launch_site {
       site_name
     }

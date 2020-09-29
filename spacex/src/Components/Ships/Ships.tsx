@@ -4,6 +4,8 @@ import Popover from '@material-ui/core/Popover';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
+import CardActionArea from '@material-ui/core/CardActionArea';
+
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -17,9 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     root:{
       flexGrow:10,
-      display:"flex",
-      flexDirection:"row",
-      flexWrap:"wrap",
+      
     },
     pos: {
         marginBottom: 12,
@@ -31,6 +31,12 @@ const useStyles = makeStyles((theme: Theme) =>
       maxWidth:345,
       padding: theme.spacing(10),
       
+    },
+    title:{
+      fontFamily:"Helvetica Neue",
+      fontSize:36,
+      padding:100,
+      textAlign:"center",
     },
   }),
 );
@@ -53,25 +59,28 @@ const CompanyInfo:React.FC<Props> = ({data}) =>{
       const open = Boolean(anchorEl);
       const id = open ? 'simple-popover' : undefined;
     return(
-          <Grid container className={classes.root} spacing={2}>
+          <Grid container className={classes.root} spacing={1}>
             <Grid item xs={12}  >
+            <Typography className={classes.title} >
+              Launches
+            </Typography>
+            </Grid>
             {!!data.ships && data.ships.map(
                     (Ship, i) => !!Ship && 
-            
-                <Card className={classes.card} key={i}>
+                <Grid item xs={12} sm={6} md={4} key={i}>
+                <Card className={classes.card} >
+                  <CardActionArea>
                   <CardMedia
                   className={classes.media}
                   >
-                  {Ship?.image ? <img src={Ship?.image} alt='ships' style={{ maxWidth: '100%', maxHeight: '30vh', minHeight: '50vh', minWidth: '100%' }} /> : null}
+                  {Ship?.image ? <img src={Ship?.image} alt='ships'  /> : null}
                   </CardMedia>
                   <CardContent>
                 <Typography gutterBottom variant="h5" component="h2">
                     {Ship?.ship_name}
                 </Typography>  
                 <Typography className={classes.pos} color="textSecondary">
-                    Model - {Ship?.ship_model}
-                    Year Build - {Ship?.year_built}
-                    Type - {Ship?.ship_type}
+                    
                 </Typography>   
                 <Typography gutterBottom variant="h5" component="h3">
                     Mission - {Ship.missions?.map(   
@@ -84,37 +93,13 @@ const CompanyInfo:React.FC<Props> = ({data}) =>{
                     </Typography>
 
                     </CardContent>
-                <CardActions>
+                    </CardActionArea>
                 
-                    <Button aria-describedby={id} variant="contained" color="primary" onClick={handleClick}>
-                    Show images
-                    </Button>
-                    
-                    <Popover
-        id={id}
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
-        }}
-      >   
-      
-                  <Typography className={classes.typography}>
-                    
-                  </Typography>
-                  </Popover>
-                    
-                </CardActions>
                     </Card>
-                    
-                    )}
-            </Grid>
+                    </Grid>
+                    )
+                    }
+            
              
         </Grid>
     )
