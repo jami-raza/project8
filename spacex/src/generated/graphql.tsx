@@ -757,10 +757,16 @@ export type LaunchInfoQuery = (
   { __typename?: 'Query' }
   & { launch?: Maybe<(
     { __typename?: 'Launch' }
-    & Pick<Launch, 'details' | 'flight_number' | 'mission_name' | 'launch_success' | 'launch_year'>
-    & { launch_site?: Maybe<(
+    & Pick<Launch, 'details' | 'flight_number' | 'mission_name' | 'launch_window' | 'launch_date_utc' | 'launch_success' | 'launch_year'>
+    & { timeline?: Maybe<(
+      { __typename?: 'LaunchTimeline' }
+      & Pick<LaunchTimeline, 'stage1_rp1_loading' | 'webcast_liftoff' | 'first_stage_landing_burn' | 'go_for_prop_loading' | 'engine_chill' | 'prelaunch_checks' | 'ignition' | 'liftoff' | 'center_stage_sep'>
+    )>, launch_site?: Maybe<(
       { __typename?: 'LaunchSite' }
       & Pick<LaunchSite, 'site_name'>
+    )>, telemetry?: Maybe<(
+      { __typename?: 'LaunchTelemetry' }
+      & Pick<LaunchTelemetry, 'flight_club'>
     )>, links?: Maybe<(
       { __typename?: 'LaunchLinks' }
       & Pick<LaunchLinks, 'article_link' | 'flickr_images' | 'mission_patch' | 'mission_patch_small' | 'presskit'>
@@ -818,7 +824,7 @@ export type ShipsQuery = (
   { __typename?: 'Query' }
   & { ships?: Maybe<Array<Maybe<(
     { __typename?: 'Ship' }
-    & Pick<Ship, 'ship_id' | 'ship_name' | 'ship_model' | 'ship_type' | 'year_built' | 'image' | 'url'>
+    & Pick<Ship, 'ship_id' | 'roles' | 'weight_kg' | 'home_port' | 'ship_name' | 'ship_model' | 'ship_type' | 'year_built' | 'image' | 'url'>
     & { missions?: Maybe<Array<Maybe<(
       { __typename?: 'BasicMission' }
       & Pick<BasicMission, 'name' | 'flight'>
@@ -881,8 +887,24 @@ export const LaunchInfoDocument = gql`
     details
     flight_number
     mission_name
+    launch_window
+    launch_date_utc
+    timeline {
+      stage1_rp1_loading
+      webcast_liftoff
+      first_stage_landing_burn
+      go_for_prop_loading
+      engine_chill
+      prelaunch_checks
+      ignition
+      liftoff
+      center_stage_sep
+    }
     launch_site {
       site_name
+    }
+    telemetry {
+      flight_club
     }
     launch_success
     launch_year
@@ -1050,6 +1072,9 @@ export const ShipsDocument = gql`
     query Ships {
   ships {
     ship_id
+    roles
+    weight_kg
+    home_port
     ship_name
     ship_model
     ship_type

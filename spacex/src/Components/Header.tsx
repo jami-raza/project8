@@ -22,14 +22,18 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
-    alignSelf: 'flex-end',
-    color:"#2E3B55"
+    fontWeight:"bold",
+    color:"#000428",
   },
   style:{
       background: "transparent"
   },
   logo:{
       marginTop:50,
+  },
+  link:{
+    textDecoration:"none",
+    color:"#000428",
   },
 }));
 
@@ -43,28 +47,12 @@ export default function Header() {
         <Toolbar className={classes.toolbar}>
           
           <Typography className={classes.title} variant="h3" noWrap>
-            SPACE <Logo />
+            <Link to="/" className={classes.link}>SPACE X</Link> 
           </Typography>
 
           
           
-          <IconButton aria-label="display more actions" edge="end" color="inherit">
-            
-            <ListItem>
-                <Link to="/"> Home</Link>
-                <Link to="/about-us"> About</Link>
-                <Link to="/launches"> Launches</Link>
-                <Link to="/missions"> Missions</Link>
-                <Link to="/rockets"> Rockets</Link>
-                <Link to="/ships"> Ships</Link>
-                
-                
-                
-                
-                
-            </ListItem>
-           
-          </IconButton>
+          
         </Toolbar>
         
       </AppBar>

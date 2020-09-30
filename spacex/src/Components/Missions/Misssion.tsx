@@ -5,6 +5,8 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
+import LanguageRoundedIcon from '@material-ui/icons/LanguageRounded';
+import Mission from '../../images/Mission.jpg'; 
 interface Props{
     data: MissionQuery
 }
@@ -12,15 +14,41 @@ interface Props{
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      display: 'flex',
-      flexDirection:'row',
-      flexWrap: 'wrap',
-      '& > *': {
-        margin: theme.spacing(1),
-        width: theme.spacing(100),
-        height: theme.spacing(10),
-      },
+        flexGrow:10,
     },
+    pos: {
+        marginBottom: 12,
+        color:"#ffff",
+        fontWeight:"lighter",
+        background: 'linear-gradient(45deg, #000428   30%, #004e92 90%)',
+        padding:20,
+        minWidth: 300,
+        minHeight: 100,
+    },
+
+    title:{
+        fontFamily:"Helvetica Neue",
+        fontSize:36,
+        padding:100,
+        textAlign:"center",
+        backgroundImage:`url(${Mission})`,
+        backgroundSize:"cover",
+        color:"#ffff",
+      fontWeight:'bold',
+      },
+      title1:{
+        color:"#004e92",
+        textAlign:"center",
+        fontSize:28,
+        fontWeight:"bolder",
+        marginBottom: 12,
+      },
+      link:{
+        marginBottom: 12,
+          
+          color:"#ffff",
+          textDecoration:"none",
+      },
   }),
 );
 
@@ -28,53 +56,44 @@ const Missions:React.FC<Props> = ({data}) =>{
     const classes = useStyles();
 
     return(
-        <Grid item xs={12}>
-            <h3>Missions</h3>
+        <Grid container spacing={5}>
+            <Grid item xs={12}>
+            <Typography className={classes.title} >
+              Missions
+            </Typography>
+            </Grid>
             {!!data.missions && data.missions.map(
                   (Mission, i) => !!Mission &&  (
-        <Grid item xs={12} className={classes.root}>
+            <Grid item xs={12} sm={6} className={classes.root} key={i}>
             
                 
-                <Box display="flex" p={10} m={10} bgcolor="background.paper" key={i} alignItems="center" justifyContent="center" >
-                <Box bgcolor="grey.300">
-                <Typography  color="textSecondary" gutterBottom>
-
+                <Box >
+                <Box p={2} m={1} >
+                <Typography gutterBottom className={classes.title1} >
                 {Mission.mission_name}
-                    </Typography>
-                
-                     
-                </Box>
-                <Box p={15}  bgcolor="grey.300" width="100%" height="100%">
-                <Typography variant="body2" color="textSecondary" component="p">
-
+                </Typography>
+                <Typography className={classes.pos}>
                 {Mission.description}
-                    </Typography>
-                </Box>
-                <Box p={2} m={2} bgcolor="grey.300">
-                <Typography variant="body2" color="textSecondary" component="p">
-                    {Mission.website && (
-                        <Link
-                        href={Mission.website}
-                        color="secondary"
-                        target="_blank"
-                        >
-                            Website
-                        </Link>
-                    )}
-                
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
-
-                    {Mission.wikipedia && (
+                <Typography >
+                    <LanguageRoundedIcon/>
+                {Mission.wikipedia && (
                         <Link
                         href={Mission.wikipedia}
-                        color="secondary"
+                        className={classes.link}
                         target="_blank"
                         >
                             Wikipedia
                         </Link>
                     )}
-                                        </Typography>
+                </Typography>
+                </Typography>
+                
+                </Box>
+                <Box p={2} m={1} >
+                
+                
+                   
+                    
 
                 </Box>  
                 

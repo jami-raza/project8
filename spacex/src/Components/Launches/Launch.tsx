@@ -9,6 +9,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { makeStyles } from '@material-ui/core/styles';
 import {Link} from 'react-router-dom';
+import Launchs from '../../images/Launch.jpg';
 
 interface Props {
     data: LaunchesQuery,
@@ -16,27 +17,49 @@ interface Props {
 }
 const useStyles = makeStyles({
     root: {
+      flexgrow:1,      
       
-      background: 'linear-gradient(45deg, #000428   30%, #004e92 90%)',
-      color:"#ffff"
     },
     title:{
       fontFamily:"Helvetica Neue",
       fontSize:36,
       padding:100,
       textAlign:"center",
+      backgroundImage:`url(${Launchs})`,
+      backgroundSize:"cover",
+      color:"#ffff",
+      fontWeight:'bold',
       
     },
     pos: {
         marginBottom: 12,
+        color:"#ffff",
+        fontWeight:"bold",
     },
+    tablehead:{
+      color:"#ffff",
+      
+    },
+    title1:{
+      color:"#004e92",
+      textAlign:"center",
+      fontSize:28,
+      fontWeight:"bolder",
+    },
+  data:{
+    color:"#ffff",
+    fontWeight:"normal",
+    fontSize:14,
+  },
     table: {
       minWidth: 300,
       minHeight:300,
+      background: 'linear-gradient(45deg, #000428   30%, #004e92 90%)',
+      color:"#ffff",
       
     },
     link:{
-      color:"#ffff",
+      color:"#000428",
       
     },
 
@@ -48,7 +71,7 @@ const Launch: React.FC<Props> = ({data}) =>{
     const classes = useStyles();
     
     return(
-        <Grid container spacing={1}>
+        <Grid container spacing={1} className={classes.root}>
           <Grid item xs={12}>
             <Typography className={classes.title} >
               Launches
@@ -57,11 +80,11 @@ const Launch: React.FC<Props> = ({data}) =>{
           {!!data.launches && data.launches.map(
             (launch, i) => 
         
-          <Grid item xs={12} sm={6} md={4} key={i} className={classes.root}>
+          <Grid item xs={12} sm={6} md={4} key={i} >
             <Box p={2} m={1}>
               <Box p={1} m={1} >
-              <Typography variant="h4" className={classes.pos} align="center">
-              {launch?.mission_name}
+              <Typography  className={classes.title1} align="center">
+              {launch?.launch_site?.site_name}
               </Typography>
               </Box>
               
@@ -72,8 +95,10 @@ const Launch: React.FC<Props> = ({data}) =>{
             <Table className={classes.table} size="small" aria-label="a dense table" >
             <TableHead>
             <TableRow>
-              <TableCell align="center" >
+              <TableCell align="center" className={classes.tablehead}>
+                
             Launch Data
+            
             </TableCell>
             
             </TableRow>
@@ -87,7 +112,9 @@ const Launch: React.FC<Props> = ({data}) =>{
               </Typography>
                 </TableCell>
               <TableCell align="left" >
+              <Typography component="p" className={classes.data}>
                 {launch?.mission_name}
+                </Typography>
               </TableCell>
               </TableRow>
               <TableRow >
@@ -97,7 +124,9 @@ const Launch: React.FC<Props> = ({data}) =>{
               </Typography>
                 </TableCell>
               <TableCell align="left" >
+              <Typography component="p" className={classes.data}>
                 {launch?.launch_year}
+                </Typography>
               </TableCell>
               </TableRow>
               <TableRow >
@@ -107,7 +136,9 @@ const Launch: React.FC<Props> = ({data}) =>{
               </Typography>
                 </TableCell>
               <TableCell align="left" >
+              <Typography component="p" className={classes.data}>
                 {launch?.launch_site?.site_name}
+                </Typography>
               </TableCell>
               </TableRow>
 
@@ -118,12 +149,12 @@ const Launch: React.FC<Props> = ({data}) =>{
                 
             </Box>
               <Box p={1} m={1}>
-              <Typography component="p" color="primary">
-              click here for full details
-              </Typography>
               
-              <Typography component="p" className={classes.link}>
-              <Link to ={`/launches/${launch?.flight_number}`} style={{ color: 'inherit', textDecoration: 'inherit'}} >show more</Link>
+              
+              <Typography component="p"  align="center">
+              <Link  to  ={`/launches/${launch?.flight_number}`} style={{ color: '#000428', textDecoration: 'inherit'}} 
+              
+              >show more</Link>
               </Typography>
               
               </Box>

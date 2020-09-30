@@ -1,73 +1,86 @@
 import React from 'react';
 import {LaunchInfoQuery} from '../../generated/graphql';
+import Noimage from '../../images/no-image.png';
+import Link from '@material-ui/core/Link';
+import Grid from '@material-ui/core/Grid';
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import { withStyles, Theme, createStyles,makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
+import ImageGallery from './Gallery';
 
 interface Props {
     data: LaunchInfoQuery
 }
 const useStyles = makeStyles({
-    root: {
-      minWidth: 275,
-      padding:20,   
-    },
-    bullet: {
-      display: 'inline-block',
-      margin: '0 2px',
-      transform: 'scale(0.8)',
-    },
-    title: {
-      fontSize: 14,
-    },
-    pos: {
+  root: {
+    flexgrow:1,      
+    
+  },
+  Subtitle:{
+    fontFamily:"Arial",
+    color:"#004e92",
+    fontSize:28,
+    padding:20,
+    textAlign:"left",
+    
+  },
+  pos: {
       marginBottom: 12,
-    },
+      color:"#ffff",
+      
+      fontSize:18,
+      
+  },
+  tablehead:{
+    color:"#ffff",
+    fontWeight:"bold",
+    fontSize:24,
+  },
+  title1:{
+    color:"#004e92",
+    textAlign:"left",
+    fontSize:36,
+    fontWeight:"bolder",
+    padding:50,
+  },
+data:{
+  color:"#ffff",
+  fontWeight:"normal",
+  fontSize:14,
+},
+  table: {
+    minWidth: 300,
+    minHeight:300,
+    background: 'linear-gradient(45deg, #000428   30%, #004e92 90%)',
+    color:"#ffff",
+    
+  },
+  link:{
+    color:"#000428",
+    
+  },
     media: {
-        height: 0,
-        paddingTop: '56.25%', // 16:9
+        width:300,
+        height:300,
       },
-    table: {
-    minWidth: 700,
+      pos1: {
+        marginBottom: 12,
+        color:"#ffff",
+        fontWeight:"lighter",
+        background: 'linear-gradient(45deg, #000428   30%, #004e92 90%)',
+        padding:20,
+        minWidth: 300,
+        minHeight: 100,
     },
-
   });
-  const values = {
-    xs: 0,
-    sm: 600,
-    md: 960,
-    lg: 1280,
-    xl: 1920,
-  };
-  const StyledTableCell = withStyles((theme: Theme) =>
-  createStyles({
-    head: {
-      backgroundColor: theme.palette.common.black,
-      color: theme.palette.common.white,
-    },
-    body: {
-      fontSize: 14,
-      textAlign:"initial",
-    },
-  }),
-)(TableCell);
-
-const StyledTableRow = withStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      '&:nth-of-type(odd)': {
-        backgroundColor: theme.palette.action.hover,
-      },
-    },
-  }),
-)(TableRow);
+  
 
 const LaunchDetails: React.FC<Props> = ({ data }) => {
     const classes = useStyles();
@@ -78,80 +91,214 @@ const LaunchDetails: React.FC<Props> = ({ data }) => {
 
     console.log(data.launch.links?.mission_patch_small)
     return(
-        <div >
-            <Box display="flex" flexDirection="row" flexWrap="wrap" bgcolor="#90djn" minHeight={100} p={1} width="100%" mx="auto"  paddingBottom="20px">
-                <Box p={1} m={1} border={1} >
-                <Typography variant="h4" component="h2">
-                    {data?.launch?.mission_name}
+       <Grid container spacing={2} className={classes.root}>
+         
+         <Grid item xs ={12} sm={6}>
+           <Box p={1} m={1}>
+             <Typography  className={classes.title1}>
+             {data.launch.mission_name}
+             </Typography>
+              <Box p={1} m={1}>
+              {data.launch.links?.mission_patch_small ? <img className={classes.media} src={data.launch.links?.mission_patch_small}/> :
+               <img className={classes.media} src={Noimage}/> }
+              </Box>
+              <Box p={1} m={1}>
+                <Typography className={classes.Subtitle}>
+                Description
                 </Typography>
-                <Typography variant="h4" component="h2">
-                {data.launch.links?.mission_patch_small ? <img src={data.launch.links?.mission_patch_small}/> : null}   
-                </Typography>
-                </Box>
-                <Box p={5} m={0}>
-                    <Table className={classes.table}>
-                    <TableHead>
-                        <TableRow>
-                          <StyledTableCell align="center">Dessert (100g serving)</StyledTableCell>
-                          
-
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                    <StyledTableRow>
-                          <StyledTableCell>Mission</StyledTableCell>
-                          <StyledTableCell align="right">
-                              {data.launch?.mission_name}
-                          </StyledTableCell>
-                          </StyledTableRow>
-                          <StyledTableRow>
-                          <StyledTableCell>Site Name</StyledTableCell>
-                          <StyledTableCell align="right">
-                              {data.launch?.launch_site?.site_name}
-                          </StyledTableCell>
-                          </StyledTableRow>
-                          <StyledTableRow>
-                          <StyledTableCell>Launch Year</StyledTableCell>
-                          <StyledTableCell align="right">
-                              {data.launch?.launch_year}
-                          </StyledTableCell>
-                          </StyledTableRow>
-                          <StyledTableRow>
-                          <StyledTableCell>Launch Year</StyledTableCell>
-                          <StyledTableCell align="right">
-                              {data.launch?.launch_success ? 'sucessful':'failed'}
-                          </StyledTableCell>
-                          </StyledTableRow>
-                          <StyledTableRow>
-                          <StyledTableCell>Rocket</StyledTableCell>
-                          <StyledTableCell align="right">
-                              {data.launch?.rocket?.rocket_name}
-                          </StyledTableCell>
-                          </StyledTableRow>
-                        
-                    </TableBody>
-                    </Table>
-                
-                    </Box>
-                <Box borderColor="grey.500" border={1} p={1} m={1} width="auto" height="auto">
-                    {data.launch.details}
-                </Box>
-                
-                
-                
-                
-                
-                <Box borderColor="grey.500" />
-                <Box borderColor="text.primary"  />    
-                
-                
-                 
-                
-                </Box>
-                
-                
-               
-        </div>
+              <Typography className={classes.pos1}>
+              {data.launch.details}
+              </Typography>
+          </Box>
+          </Box>
+         </Grid>
+         <Grid item xs={12} sm={6}>
+          <Box p={5} m={1}>
+            <TableContainer component={Paper}>
+            <Table className={classes.table}>
+              <TableHead>
+                <TableRow>
+                  <TableCell align="center" className={classes.tablehead}>
+                    Details
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  <TableRow>
+                    <TableCell align="left">
+                    <Typography component="p" className={classes.pos}>
+                      Mission Name
+                      </Typography>
+                      </TableCell>
+                      <TableCell>
+                      <Typography component="p" className={classes.data}>
+                      {data.launch.mission_name}
+                      </Typography>
+                      </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>
+                    <Typography component="p" className={classes.pos}>
+                      Launch Year
+                      </Typography>
+                      </TableCell>
+                      <TableCell>
+                      <Typography component="p" className={classes.data}>
+                      {data.launch.launch_year}
+                      </Typography>
+                      </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>
+                    <Typography component="p" className={classes.pos}>
+                      Launch Site 
+                      </Typography>
+                      </TableCell>
+                      <TableCell>
+                      <Typography component="p" className={classes.data}>
+                      {data.launch.launch_site?.site_name}
+                      </Typography>
+                      </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>
+                    <Typography component="p" className={classes.pos}>
+                      Launch Date 
+                      </Typography>
+                      </TableCell>
+                      <TableCell>
+                      <Typography component="p" className={classes.data}>
+                      {data.launch.launch_date_utc}
+                      </Typography>
+                      </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>
+                    <Typography component="p" className={classes.pos}>
+                      Launch Window 
+                      </Typography>
+                      </TableCell>
+                      <TableCell>
+                      <Typography component="p" className={classes.data}>
+                      {data.launch.launch_window}
+                      </Typography>
+                      </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>
+                    <Typography component="p" className={classes.pos}>
+                      Rocket
+                      </Typography>
+                      </TableCell>
+                      <TableCell>
+                      <Typography component="p" className={classes.data}>
+                      {data.launch.rocket?.rocket_name}
+                      </Typography>
+                      </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>
+                    <Typography component="p" className={classes.pos}>
+                      Launch Success
+                      </Typography>
+                      </TableCell>
+                      <TableCell>
+                      <Typography component="p" className={classes.data}>
+                      {data.launch.launch_success ? 'Successfull' : 'Failed'}
+                      </Typography>
+                      </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>
+                    <Typography component="p" className={classes.pos}>
+                      Engine 
+                      </Typography>
+                      </TableCell>
+                      <TableCell>
+                      <Typography component="p" className={classes.data}>
+                     {data.launch.timeline?.engine_chill ? data.launch.timeline?.engine_chill : <p> N/A </p>}
+                     </Typography>
+                      </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>
+                    <Typography component="p" className={classes.pos}>
+                      First Stage
+                      </Typography>
+                      </TableCell>
+                      <TableCell>
+                      <Typography component="p" className={classes.data}>
+                     {data.launch.timeline?.first_stage_landing_burn ? data.launch.timeline?.first_stage_landing_burn : <p> N/A </p>}
+                     </Typography>
+                      </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>
+                    <Typography component="p" className={classes.pos}>
+                      Ignition
+                      </Typography>
+                      </TableCell>
+                      <TableCell>
+                      <Typography component="p" className={classes.data}>
+                     {data.launch.timeline?.ignition ? data.launch.timeline?.ignition : <p> N/A </p>}
+                     </Typography>
+                      </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>
+                    <Typography component="p" className={classes.pos}>
+                      Lift Off
+                      </Typography>
+                      </TableCell>
+                      <TableCell>
+                      <Typography component="p" className={classes.data}>
+                     {data.launch.timeline?.liftoff ? data.launch.timeline?.liftoff: <p> N/A </p>}
+                     </Typography>
+                      </TableCell>
+                  </TableRow>
+                  <TableRow>
+                  <TableCell>
+                  <Typography component="p" className={classes.pos}>
+                      Pre Launches
+                      </Typography>
+                      </TableCell>
+                      <TableCell>
+                      <Typography component="p" className={classes.data}>
+                     {data.launch.timeline?.prelaunch_checks ? data.launch.timeline?.prelaunch_checks : <p> N/A </p>}
+                     </Typography>
+                      </TableCell>
+                  </TableRow>
+                  <TableRow>
+                  <TableCell>
+                  <Typography component="p" className={classes.pos}>
+                      Web Cast
+                      </Typography>
+                      </TableCell>
+                      <TableCell>
+                      <Typography component="p" className={classes.data}>
+                     {data.launch.timeline?.webcast_liftoff ? data.launch.timeline?.webcast_liftoff : <p> N/A </p>}
+                     </Typography>
+                      </TableCell>
+                  </TableRow>
+                  <TableRow>
+                  <TableCell>
+                  <Typography component="p" className={classes.pos}>
+                      Other details
+                      </Typography>
+                      </TableCell>
+                      <TableCell>
+                     {data.launch.links?.presskit ? <Link href={data.launch.links.presskit}>Visit Website</Link>: <p> N/A </p>}
+                      </TableCell>
+                  </TableRow>
+                  </TableBody>
+              </Table>  
+            </TableContainer>
+          </Box>
+        </Grid>
+        <Grid item xs={12}>
+        <ImageGallery data={data}/>
+        </Grid>
+      </Grid>
     )
 
 }
